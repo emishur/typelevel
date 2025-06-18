@@ -1,0 +1,16 @@
+{
+  "name": "typelevel",
+  "version": "1.0.0",
+  "description": "testbed for type-level Typescript programming",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "yarn tsx src/index.ts",
+    "build": "tsc -b"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "yarn@1.22.22"
+}
