@@ -8,6 +8,20 @@ type Brand<B> = { [__brand]: B };
 export type Branded<T, B> = T & Brand<B>;
 ```
 
+```typescript
+type UserId = Branded<number, "userId">;
+type OrderId = Branded<number, "orderId">;
+
+function getUser(id: UserId){}
+
+const userId = 'user-123' as UserId;
+const orderId = 'order-456' as OrderId;
+
+getUser(userId);     // OK
+getUser(orderId);    // Error: Argument of type 'OrderId' is not assignable to
+// parameter of type 'UserId'
+```
+
 ## Open Union Type
 
 ```typescript
@@ -47,7 +61,7 @@ function fn2(v: T) {
       console.log(v);
       break;
     default:
-      // case "b" is missing, and there is compile time error
+      // case "b" is missing, and there IS a compile time error
       assertNever(v);
   }
 }
