@@ -1,5 +1,58 @@
 # Testbed for Typescript Type-Level Programming
 
+## Branded Types
+
+```typescript
+declare const __brand: unique symbol;
+type Brand<B> = { [__brand]: B };
+export type Branded<T, B> = T & Brand<B>;
+```
+
+## Open Union Type
+
+```typescript
+type Options = "a" | "b" | "c" | (string & {});
+
+function fn(o: Options) {};
+//Intellisense will suggests values "a", "b", "c" for the parameter o, but
+// will accept any other string
+```
+
+## Assert never and Exhaustive switch/case Matching
+
+```typescript
+const assertNever = (value: never): never => {
+  throw new Error(`Unexpected value ${value}`);
+};
+```
+
+```typescript
+type T = "a" | "b";
+
+
+function fn1(v: T) {
+  switch (v) {
+    case "a":
+      console.log(v);
+      break;
+    default:
+      // case "b" is missing, but there is no compile time error
+      throw new Error(`Unexpected value ${v}`);
+  }
+}
+
+function fn2(v: T) {
+  switch (v) {
+    case "a":
+      console.log(v);
+      break;
+    default:
+      // case "b" is missing, and there is compile time error
+      assertNever(v);
+  }
+}
+```
+
 ## Type Transformation Cheat Sheet
 
 ### Table of Contents
