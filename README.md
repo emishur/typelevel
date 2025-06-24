@@ -1,5 +1,20 @@
 # Testbed for Typescript Type-Level Programming
 
+## Prettify
+
+"Prettifying" a type in TypeScript refers to making complex or deeply nested
+types more readable and understandable, especially in IDE hover previews and
+error messages.
+
+```typescript
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+```
+
+`{ [K in keyof T]: T[K]; }` flattens intersection types. `& {}` forces TypeScript
+to compute the final shape of the type.
+
 ## Branded Types
 
 ```typescript

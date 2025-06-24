@@ -1,3 +1,5 @@
+import { assertNever } from "./type-utils";
+
 function foo<T extends boolean>(p: T): string;
 function foo<T extends number>(p: T): number;
 function foo(p: boolean | number): string | number {

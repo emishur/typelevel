@@ -1,4 +1,4 @@
-import { Branded } from "./branded";
+import { Branded } from "./type-utils";
 
 type Id = Branded<number, "Id">;
 type Amount = Branded<number, "amount">;

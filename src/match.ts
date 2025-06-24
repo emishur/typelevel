@@ -1,6 +1,4 @@
-const assertNever = (value: never): never => {
-  throw new Error(`Unexpected value ${value}`);
-};
+import { assertNever } from "./type-utils";
 
 type T = "a" | "b";
 
