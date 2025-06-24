@@ -102,6 +102,9 @@ const a2 = foo2(true); // a: string = "yes"
 const b2 = foo2(3); // b: number = 6
 ```
 
+Both implementations still do not check if the wrong type returned by the function
+implementation on compile time.
+
 ## Type Transformation Cheat Sheet
 
 ### Table of Contents
