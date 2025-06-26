@@ -33,8 +33,10 @@ export const executeSelectQuery =
     columns: P
   ): Result[] => {
     const cols =
-      columns === "*" ? "*" : columns.map((c) => c.toString()).join(",");
-    const sql = `select ${cols} from ${table}`;
+      columns === "*"
+        ? "*"
+        : columns.map((c) => `"${c.toString()}"`).join(", ");
+    const sql = `select ${cols} from "${table}"`;
     console.log("SQL", sql);
     return [] as Result[];
   };

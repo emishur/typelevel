@@ -55,6 +55,8 @@ getUser(orderId);    // Error: Argument of type 'OrderId' is not assignable to
 // parameter of type 'UserId'
 ```
 
+Brand exists only on compile time.
+
 ## Open Union Type
 
 ```typescript
@@ -98,6 +100,20 @@ function fn2(v: T) {
       assertNever(v);
   }
 }
+
+//exhaustive match w/o errors
+function fn3(v: T) {
+  switch (v) {
+    case "a":
+      console.log(v);
+      break;
+    case "b":
+      console.log(v);
+      break;
+    default:
+      assertNever(v);
+  }
+}
 ```
 
 ## Type Safe Function Return Type Overload
@@ -111,7 +127,7 @@ function foo(p: boolean | number): string | number {
 }
 
 const a = foo(true); // a: string = "yes"
-const b = foo(3); // b: string = 6
+const b = foo(3); // b: number = 6
 ```
 
 Same with generics and conditional types:
@@ -233,7 +249,7 @@ Usage:
 const ctx = createDbContext<MySchema>();
 
 //selectFrom() accepts only "order" or "orderItem" table names
-//select() accepts only array of column names from selected table or "*"
+//select() accepts only array of column names from a selected table or "*"
 
 // r2 type is { user: string, email: string }[]
 const r2 = ctx.selectFrom("order").select(["email", "user"]).execute();
