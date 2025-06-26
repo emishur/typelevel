@@ -1,26 +1,4 @@
 import { Prettify } from "./type-utils";
-type TableName<Schema> = keyof Schema;
-
-export type DBContext<Schema> = {
-  selectFrom: <TName extends TableName<Schema>>(
-    table: TName
-  ) => SelectQueryBuilder<TName, Schema[TName]>;
-};
-
-export type SelectQueryBuilder<TName, TSchema> = {
-  select: <Columns extends (keyof TSchema)[], P extends "*" | [...Columns]>(
-    columns: P
-  ) => SelectQueryExecutor<TSchema, Columns, P>;
-};
-
-export type SelectQueryExecutor<
-  TSchema,
-  Columns extends (keyof TSchema)[],
-  P extends "*" | [...Columns],
-  Result = SelectResult<TSchema, P>
-> = {
-  execute: () => Result[];
-};
 
 export const createDbContext = <Schema>(): DBContext<Schema> => ({
   selectFrom: <TName extends TableName<Schema>>(table: TName) =>
@@ -60,3 +38,26 @@ export const executeSelectQuery =
     console.log("SQL", sql);
     return [] as Result[];
   };
+
+type TableName<Schema> = keyof Schema;
+
+export type DBContext<Schema> = {
+  selectFrom: <TName extends TableName<Schema>>(
+    table: TName
+  ) => SelectQueryBuilder<TName, Schema[TName]>;
+};
+
+export type SelectQueryBuilder<TName, TSchema> = {
+  select: <Columns extends (keyof TSchema)[], P extends "*" | [...Columns]>(
+    columns: P
+  ) => SelectQueryExecutor<TSchema, Columns, P>;
+};
+
+export type SelectQueryExecutor<
+  TSchema,
+  Columns extends (keyof TSchema)[],
+  P extends "*" | [...Columns],
+  Result = SelectResult<TSchema, P>
+> = {
+  execute: () => Result[];
+};
