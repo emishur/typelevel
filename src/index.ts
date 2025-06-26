@@ -1,4 +1,4 @@
-import { executeSelectQuery } from "./query-builder";
+import { createDbContext, executeSelectQuery } from "./query-builder";
 import { Branded, Prettify } from "./type-utils";
 
 type Id = Branded<number, "Id">;
@@ -45,3 +45,11 @@ const r = executeSelectQuery<"order", MySchema["order"]>("order")([
   "email",
   "user",
 ]);
+
+const ctx = createDbContext<MySchema>();
+
+const r2 = ctx.selectFrom("order").select(["email", "user"]).execute();
+const r3 = ctx
+  .selectFrom("orderItem")
+  .select(["description", "quantity"])
+  .execute();
