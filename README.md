@@ -182,11 +182,12 @@ type Keys = A<User>; // ⇒ ("id" | "email")[]
 
 ### Tuple Inference in Function
 
-Note: inspect `K extends readonly (keyof T)[]`
-
 ```typescript
-function select<T, K extends readonly (keyof T)[]>(cols: readonly [...K]) {}  
-// cols inferred as tuple: ["id", "email"]
+type U = "a" | "b" | "c";
+//items can be a tuple of values from union type U only
+function select<K extends U[]>(items: [...K]) {}
+
+select(["a", "c"])// items inferred as tuple: ["a", "c"]
 ```
 
 ### Pick Properties by Tuple

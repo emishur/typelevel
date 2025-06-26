@@ -1,4 +1,5 @@
-import { Branded } from "./type-utils";
+import { executeSelectQuery } from "./query-builder";
+import { Branded, Prettify } from "./type-utils";
 
 type Id = Branded<number, "Id">;
 type Amount = Branded<number, "amount">;
@@ -11,4 +12,33 @@ function fn(o: Options) {}
 
 fn("s");
 
-console.log("Hello World");
+type O = {
+  foo: number;
+  bar: string;
+};
+type KK = (keyof O & {})[];
+function accept<A extends KK, R = Prettify<Pick<O, A[number]>>>(
+  input: readonly [...A]
+): R {
+  console.log("ACCEPT", input);
+  return {} as R;
+}
+
+//generated from the DB schema introspection
+type MySchema = {
+  order: {
+    id: number;
+    user: string;
+    email: string;
+    total: number;
+  };
+  orderItem: {
+    id: number;
+    orderId: number;
+    sku: string;
+    description: string;
+    quantity: number;
+  };
+};
+
+executeSelectQuery<"order", MySchema["order"]>("order")(["email", "user"]);
