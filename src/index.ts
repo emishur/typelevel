@@ -41,4 +41,7 @@ type MySchema = {
   };
 };
 
-executeSelectQuery<"order", MySchema["order"]>("order")(["email", "user"]);
+const r = executeSelectQuery<"order", MySchema["order"]>("order")([
+  "email",
+  "user",
+]);
