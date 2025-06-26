@@ -46,7 +46,7 @@ const r = executeSelectQuery<"order", MySchema["order"]>("order")([
   "user",
 ]);
 
-const rr = executeSelectQuery<"order", MySchema["order"]>("order")("*");
+const rall = executeSelectQuery<"order", MySchema["order"]>("order")("*");
 
 const ctx = createDbContext<MySchema>();
 
@@ -55,6 +55,7 @@ const r3 = ctx
   .selectFrom("orderItem")
   .select(["description", "quantity"])
   .execute();
+const r4 = ctx.selectFrom("order").select("*").execute();
 
 function tt<
   P extends string | number,

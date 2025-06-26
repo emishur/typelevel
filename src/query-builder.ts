@@ -8,15 +8,16 @@ export type DBContext<Schema> = {
 };
 
 export type SelectQueryBuilder<TName, TSchema> = {
-  select: <Columns extends (keyof TSchema)[]>(
-    columns: [...Columns]
-  ) => SelectQueryExecutor<TSchema, Columns>;
+  select: <Columns extends (keyof TSchema)[], P extends "*" | [...Columns]>(
+    columns: P
+  ) => SelectQueryExecutor<TSchema, Columns, P>;
 };
 
 export type SelectQueryExecutor<
   TSchema,
   Columns extends (keyof TSchema)[],
-  Result = Prettify<Pick<TSchema, Columns[number]>>
+  P extends "*" | [...Columns],
+  Result = SelectResult<TSchema, P>
 > = {
   execute: () => Result[];
 };
@@ -29,7 +30,9 @@ export const createDbContext = <Schema>(): DBContext<Schema> => ({
 const createSQB = <TName, TSchema>(
   table: TName
 ): SelectQueryBuilder<TName, TSchema> => ({
-  select: <Columns extends (keyof TSchema)[]>(columns: [...Columns]) => ({
+  select: <Columns extends (keyof TSchema)[], P extends "*" | [...Columns]>(
+    columns: P
+  ) => ({
     execute: () => executeSelectQuery<TName, TSchema>(table)(columns),
   }),
 });
