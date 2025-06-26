@@ -1,5 +1,5 @@
 import { createDbContext, executeSelectQuery } from "./query-builder";
-import { Branded, Prettify } from "./type-utils";
+import { assertNever, Branded, Prettify } from "./type-utils";
 
 type Id = Branded<number, "Id">;
 type Amount = Branded<number, "amount">;
@@ -46,6 +46,8 @@ const r = executeSelectQuery<"order", MySchema["order"]>("order")([
   "user",
 ]);
 
+const rr = executeSelectQuery<"order", MySchema["order"]>("order")("*");
+
 const ctx = createDbContext<MySchema>();
 
 const r2 = ctx.selectFrom("order").select(["email", "user"]).execute();
@@ -53,3 +55,17 @@ const r3 = ctx
   .selectFrom("orderItem")
   .select(["description", "quantity"])
   .execute();
+
+function tt<
+  P extends string | number,
+  R = Prettify<P extends string ? boolean : P extends number ? string : never>
+>(p: P): R {
+  if (typeof p === "string") {
+    return true as R;
+  }
+  if (typeof p === "number") return p.toString() as R;
+  return assertNever(p);
+}
+
+const t1 = tt("foo");
+const t2 = tt(3);

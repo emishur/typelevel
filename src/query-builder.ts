@@ -34,17 +34,26 @@ const createSQB = <TName, TSchema>(
   }),
 });
 
+type SelectResult<TSchema, P> = Prettify<
+  P extends "*"
+    ? TSchema
+    : P extends (keyof TSchema)[]
+    ? Pick<TSchema, P[number]>
+    : never
+>;
+
 export const executeSelectQuery =
   <TName, TSchema>(table: TName) =>
   <
     Columns extends (keyof TSchema)[],
-    Result = Prettify<Pick<TSchema, Columns[number]>>
+    P extends "*" | [...Columns],
+    Result = SelectResult<TSchema, P>
   >(
-    columns: [...Columns]
+    columns: P
   ): Result[] => {
-    const sql = `select ${columns
-      .map((c) => c.toString())
-      .join(",")} from ${table}`;
+    const cols =
+      columns === "*" ? "*" : columns.map((c) => c.toString()).join(",");
+    const sql = `select ${cols} from ${table}`;
     console.log("SQL", sql);
     return [] as Result[];
   };
