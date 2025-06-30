@@ -12,6 +12,12 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
 
+/**
+ * Guarantee that function of type F always returns a value
+ */
+export type ReturnNonVoid<F extends (...args: any) => any> =
+  ReturnType<F> extends void ? never : F;
+
 export const assertNever = (value: never): never => {
   throw new Error(`Unexpected value ${value}`);
 };

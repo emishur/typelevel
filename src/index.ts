@@ -1,5 +1,5 @@
 import { createDbContext, executeSelectQuery } from "./query-builder";
-import { assertNever, Branded, Prettify } from "./type-utils";
+import { assertNever, Branded, Prettify, ReturnNonVoid } from "./type-utils";
 
 type Id = Branded<number, "Id">;
 type Amount = Branded<number, "amount">;
@@ -70,3 +70,17 @@ function tt<
 
 const t1 = tt("foo");
 const t2 = tt(3);
+
+const map =
+  <A, B>(fn: ReturnNonVoid<(a: A) => B>) =>
+  (a: A): B => {
+    return fn(a);
+  };
+
+function num2string(n: number) {
+  console.log(n.toString());
+  // missing return n.toString();
+}
+// compile time error
+//let k = map(num2string)(5);
+// console.log("k", k);

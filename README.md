@@ -154,6 +154,29 @@ const b2 = foo2(3); // b: number = 6
 Both implementations still do not check if the wrong type returned by the function
 implementation on compile time.
 
+## Guarantee That The Function Always Returns a Value
+
+```typescript
+/**
+ * Guarantee that function of type F always returns a value
+ */
+export type ReturnNonVoid<F extends (...args: any) => any> =
+  ReturnType<F> extends void ? never : F;
+
+const map =
+  <A, B>(fn: ReturnNonVoid<(a: A) => B>) =>
+  (a: A): B => {
+    return fn(a);
+  };
+
+function num2string(n: number) {
+  console.log(n.toString());
+  // missing return n.toString();
+}
+// compile time error
+let k = map(num2string)(5);
+```
+
 ## Type Transformation Cheat Sheet
 
 ### Union to Array
