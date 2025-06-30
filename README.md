@@ -7,6 +7,7 @@
 - [Open Union Type](#open-union-type)
 - [Assert never and Exhaustive switch/case Matching](#assert-never-and-exhaustive-switchcase-matching)
 - [Type Safe Function Return Type Overload](#type-safe-function-return-type-overload)
+- [Guarantee That The Function Always Returns a Value](#guarantee-that-the-function-always-returns-a-value)
 - [Type Transformation Cheat Sheet](#type-transformation-cheat-sheet)
   - [Union to Array](#union-to-array)
   - [Tuple to Union](#tuple-to-union)
