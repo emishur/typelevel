@@ -58,6 +58,19 @@ getUser(orderId);    // Error: Argument of type 'OrderId' is not assignable to
 
 Brand exists only on compile time.
 
+Derived brands
+
+```typescript
+const div = <A extends string, B extends string>(
+  a: Branded<number, A>,
+  b: Branded<number, B>
+) => (a / b) as Branded<number, `${A}/${B}`>;
+
+const distance = 5 as Branded<number, "ft">;
+const time = 10 as Branded<number, "sec">;
+const speed = div(distance, time); //speed has brand "ft/sec"
+```
+
 ## Open Union Type
 
 ```typescript

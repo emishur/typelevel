@@ -1,5 +1,11 @@
 import { createDbContext, executeSelectQuery } from "./query-builder";
-import { assertNever, Branded, Prettify, ReturnNonVoid } from "./type-utils";
+import {
+  assertNever,
+  Branded,
+  ExtractBrand,
+  Prettify,
+  ReturnNonVoid,
+} from "./type-utils";
 
 type Id = Branded<number, "Id">;
 type Amount = Branded<number, "amount">;
@@ -84,3 +90,13 @@ function num2string(n: number) {
 // compile time error
 //let k = map(num2string)(5);
 // console.log("k", k);
+
+const div = <A extends string, B extends string>(
+  a: Branded<number, A>,
+  b: Branded<number, B>
+) => (a / b) as Branded<number, `${A}/${B}`>;
+
+//derived brands
+const distance = 5 as Branded<number, "ft">;
+const time = 10 as Branded<number, "sec">;
+const speed = div(distance, time); //speed has brand "ft/sec"
