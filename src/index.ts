@@ -91,12 +91,11 @@ function num2string(n: number) {
 //let k = map(num2string)(5);
 // console.log("k", k);
 
-const div = <A extends string, B extends string>(
-  a: Branded<number, A>,
-  b: Branded<number, B>
-) => (a / b) as Branded<number, `${A}/${B}`>;
+type Unit<U extends string> = Branded<number, U>;
+const div = <A extends string, B extends string>(a: Unit<A>, b: Unit<B>) =>
+  (a / b) as Unit<`${A}/${B}`>;
 
 //derived brands
-const distance = 5 as Branded<number, "ft">;
-const time = 10 as Branded<number, "sec">;
+const distance = 5 as Unit<"ft">;
+const time = 10 as Unit<"sec">;
 const speed = div(distance, time); //speed has brand "ft/sec"

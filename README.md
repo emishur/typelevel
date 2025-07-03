@@ -61,10 +61,9 @@ Brand exists only on compile time.
 Derived brands
 
 ```typescript
-const div = <A extends string, B extends string>(
-  a: Branded<number, A>,
-  b: Branded<number, B>
-) => (a / b) as Branded<number, `${A}/${B}`>;
+type Unit<U extends string> = Branded<number, U>;
+const div = <A extends string, B extends string>(a: Unit<A>, b: Unit<B>) =>
+  (a / b) as Unit<`${A}/${B}`>;
 
 const distance = 5 as Branded<number, "ft">;
 const time = 10 as Branded<number, "sec">;
