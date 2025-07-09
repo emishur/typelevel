@@ -5,12 +5,15 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "yarn tsx src/index.ts",
+    "dev": "yarn tsx src/sanitize.ts",
     "build": "tsc -b"
   },
   "devDependencies": {
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@1.22.22",
+  "dependencies": {
+    "zod": "^4.0.0"
+  }
 }
