@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "yarn tsx src/sanitize.ts",
+    "dev": "yarn tsx src/index.ts",
     "build": "tsc -b"
   },
   "devDependencies": {

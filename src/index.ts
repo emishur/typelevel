@@ -1,11 +1,5 @@
 import { createDbContext, executeSelectQuery } from "./query-builder";
-import {
-  assertNever,
-  Branded,
-  ExtractBrand,
-  Prettify,
-  ReturnNonVoid,
-} from "./type-utils";
+import { assertNever, Branded, Prettify, ReturnNonVoid } from "./type-utils";
 
 type Id = Branded<number, "Id">;
 type Amount = Branded<number, "amount">;
@@ -99,13 +93,3 @@ const div = <A extends string, B extends string>(a: Unit<A>, b: Unit<B>) =>
 const distance = 5 as Unit<"ft">;
 const time = 10 as Unit<"sec">;
 const speed = div(distance, time); //speed has brand "ft/sec"
-
-//unit
-type Unitt = Branded<void, "()">;
-
-function foo(bar: string): Unitt {
-  console.log(bar);
-}
-
-const k = foo("ggg");
-console.log(k);
